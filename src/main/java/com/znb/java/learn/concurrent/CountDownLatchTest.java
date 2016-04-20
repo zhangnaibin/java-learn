@@ -36,7 +36,7 @@ public class CountDownLatchTest {
         System.out.println("wait begin");
 
         countDownLatch.await();
-        
+
         System.out.println("wait end");
     }
 }
