@@ -20,7 +20,7 @@ import java.nio.channels.SocketChannel;
 public class ChannelTest {
 
     /**
-     * FileChannel，需要通过使用一个InputStream、OutputStream或RandomAccessFile来获取一个FileChannel实例
+     * FileChannel，需要通过使用一个InputStream、OutputStream或RandomAccessFile来获取一个FileChannel实例,从文件读取数据
      */
     public void fileChannel() {
         FileOutputStream output = null;
@@ -32,6 +32,7 @@ public class ChannelTest {
             // read data
             ByteBuffer readBuf = ByteBuffer.allocate(20);
             while (channel.read(readBuf) != -1) {
+                readBuf.flip();
                 // process readBuf
             }
 
@@ -39,6 +40,7 @@ public class ChannelTest {
             ByteBuffer writeBuf = ByteBuffer.allocate(20);
             writeBuf.clear();
             writeBuf.put("data".getBytes());
+            // 将buf从写模式，切换到读模式（写入channel对buf来说是读）
             writeBuf.flip();
             // 无法保证write()方法一次能向FileChannel写入多少字节，因此需要重复调用write()方法，直到Buffer中已经没有尚未写入通道的字节
             while (writeBuf.hasRemaining()) {
@@ -74,7 +76,7 @@ public class ChannelTest {
     }
 
     /**
-     * 连接到TCP网络套接字的通道
+     * 连接到TCP网络套接字的通道，读写tcp网络数据
      */
     public void SocketChannel() {
         SocketChannel socketChannel = null;
@@ -83,6 +85,7 @@ public class ChannelTest {
             // read data
             ByteBuffer readBuf = ByteBuffer.allocate(20);
             while (socketChannel.read(readBuf) != -1) {
+                readBuf.flip();
                 // process readBuf
             }
 
@@ -90,7 +93,6 @@ public class ChannelTest {
             ByteBuffer writeBuf = ByteBuffer.allocate(20);
             writeBuf.clear();
             writeBuf.put("".getBytes());
-
             writeBuf.flip();
             while (writeBuf.hasRemaining()) {
                 socketChannel.write(writeBuf);
@@ -118,6 +120,9 @@ public class ChannelTest {
         }
     }
 
+    /**
+     * 监听tcp连接，每一个连接创建一个SocketChannel
+     */
     public void ServerSocketChannelTest() {
         ServerSocketChannel serverSocketChannel = null;
         try {
