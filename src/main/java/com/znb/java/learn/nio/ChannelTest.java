@@ -183,4 +183,44 @@ public class ChannelTest {
         }
     }
 
+    /**
+     * 分散、聚集操作channel的数据，适用于需要将传输数据分开处理的场合
+     */
+    public void scatterTest() throws Exception{
+        // 适用于消息固定的情况，只有第一个填满了才会填充下一个
+        SocketChannel channel = SocketChannel.open();
+        ByteBuffer header = ByteBuffer.allocate(20);
+        ByteBuffer body = ByteBuffer.allocate(1024);
+        ByteBuffer[] bufferArray = {header, body};
+        channel.read(bufferArray);
+
+        // 写入channel
+        channel.write(bufferArray);
+    }
+
+    /**
+     * 通道间的数据传输
+     * 如果两个通道有一个是FileChannel.只能FileChannel调用传输方法
+     */
+    public void channelTransport() throws Exception {
+        RandomAccessFile fromFile = new RandomAccessFile("", "");
+        FileChannel fromChannel = fromFile.getChannel();
+
+        RandomAccessFile toFile = new RandomAccessFile("", "");
+        FileChannel toChannel = toFile.getChannel();
+
+        long positon = 0;
+        long count = fromChannel.size();
+        // 将数据从源通道传输到FileChannel中（译者注：这个方法在JDK文档中的解释为将字节从给定的可读取字节通道传输到此通道的文件中）
+        toChannel.transferFrom(fromChannel, positon, count);
+
+        // 将数据从FileChannel传输到其他的channel中
+        fromChannel.transferTo(positon, count, toChannel);
+
+        // SocketChannel只会传输此刻准备好的数据（可能不足count字节）。因此，SocketChannel可能不会将请求的所有数据(count个字节)全部传输到FileChannel中
+        SocketChannel socketChannel = SocketChannel.open();
+        fromChannel.transferTo(positon, count, socketChannel);
+        toChannel.transferFrom(socketChannel, positon, count);
+    }
+
 }
