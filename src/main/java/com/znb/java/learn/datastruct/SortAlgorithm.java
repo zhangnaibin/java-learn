@@ -59,10 +59,6 @@ public class SortAlgorithm {
         System.out.println("op times :" + times);
     }
 
-    public void selectSort(int[] a, int n) {
-
-    }
-
     // 快排,low为左边界，high为右边界
     public void quickSortCell(int[] a, int low, int high) {
         if (low < high) {
@@ -88,6 +84,7 @@ public class SortAlgorithm {
         }
     }
 
+    // 快速排序
     public void quickSort(int[] a) {
         quickSortCell(a, 0, a.length - 1);
         for (int i = 0; i < a.length; i ++) {
@@ -95,7 +92,32 @@ public class SortAlgorithm {
         }
     }
 
+    // 希尔排序
     public void shellSort(int[] a) {
+        for (int i = 0; i < a.length; i ++) {
+            System.out.println(a[i]);
+        }
+    }
+
+    // 选择排序
+    public void selectSort(int[] a) {
+        int mixIdx = 0;
+        for (int i = 0; i < a.length; i ++) {
+            mixIdx = i;
+            // 找出a[i+1,...n]的最小元素，坐标给minIdx
+            for (int j = i + 1; j < a.length; j ++) {
+                if (a[j] < a[mixIdx]) {
+                    mixIdx = j;
+                }
+            }
+            // 交换数据，保证a[0...i]区数据有序
+            if (mixIdx != i) {
+                int temp = a[i];
+                a[i] = a[mixIdx];
+                a[mixIdx] = temp;
+            }
+        }
+
         for (int i = 0; i < a.length; i ++) {
             System.out.println(a[i]);
         }
@@ -106,5 +128,6 @@ public class SortAlgorithm {
 //        new SortAlgorithm().bubbleSort(a, a.length);
 //        new SortAlgorithm().quickSort(a);
 //        new SortAlgorithm().insertSort(a);
+        new SortAlgorithm().selectSort(a);
     }
 }
