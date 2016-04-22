@@ -39,7 +39,6 @@ public class CharsetTest {
         Charset charset = Charset.defaultCharset();
         Charset charset2 = Charset.forName("ISO-8859-1"); // 这里会有检查的
 
-
     }
 
     public static void main(String[] args) {

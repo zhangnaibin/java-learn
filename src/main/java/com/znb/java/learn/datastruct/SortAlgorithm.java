@@ -92,16 +92,9 @@ public class SortAlgorithm {
         }
     }
 
-    // 希尔排序
-    public void shellSort(int[] a) {
-        for (int i = 0; i < a.length; i ++) {
-            System.out.println(a[i]);
-        }
-    }
-
     // 选择排序
     public void selectSort(int[] a) {
-        int mixIdx = 0;
+        int mixIdx;
         for (int i = 0; i < a.length; i ++) {
             mixIdx = i;
             // 找出a[i+1,...n]的最小元素，坐标给minIdx
@@ -123,11 +116,42 @@ public class SortAlgorithm {
         }
     }
 
+    // 希尔排序
+    public void shellSort(int[] a) {
+        // 步长每次减半
+        for (int gap = a.length / 2; gap > 0; gap /= 2) {
+            // 有gap个分组，每个分组都进行直接插入排序
+            for (int i = 0; i < gap; i ++) {
+                groupSort(a, a.length, i, gap);
+            }
+        }
+        for (int i = 0; i < a.length; i ++) {
+            System.out.println(a[i]);
+        }
+    }
+
+    // 对shell排序中的单个组排序,就是一次插入排序的执行
+    public void groupSort(int a[], int leng, int start, int gap) {
+        for (int j = start + gap; j < leng; j += gap) {
+            // a[j]前面为有序的数组
+            if (a[j] < a[j - gap]) {
+                int temp = a[j];
+                int k = j - gap;
+                while (k >0 && a[k] > temp) {
+                    a[k + gap] = a[k];
+                    k -= gap;
+                }
+                a[k + gap] = temp;
+            }
+        }
+    }
+
     public static void main(String[] args) {
         int[] a = {3, 1, 99, 55, 77, 110, 5, 10086, 65};
 //        new SortAlgorithm().bubbleSort(a, a.length);
 //        new SortAlgorithm().quickSort(a);
 //        new SortAlgorithm().insertSort(a);
-        new SortAlgorithm().selectSort(a);
+//        new SortAlgorithm().selectSort(a);
+//        new SortAlgorithm().shellSort(a);
     }
 }
