@@ -102,7 +102,7 @@ public class SortAlgorithm {
     }
 
     public static void main(String[] args) {
-        int[] a = {3,1,99,55,77};
+        int[] a = {3, 1, 99, 55, 77, 110, 5, 10086, 65};
 //        new SortAlgorithm().bubbleSort(a, a.length);
 //        new SortAlgorithm().quickSort(a);
 //        new SortAlgorithm().insertSort(a);
