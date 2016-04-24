@@ -22,7 +22,7 @@ public class FieldTest {
                 System.out.println(f.getName());
             }
             System.out.println("-------------");
-            Field filed = test.getField("name"); // 只能获取public 的变量
+            Field filed = test.getField("name");
             System.out.println(filed.getName());
             System.out.println("-------------");
 
