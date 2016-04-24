@@ -36,6 +36,7 @@ public class SpinLockImplTest {
     }
 
     // 不停查询前驱变量，使用隐式队列，没有真实后继节点
+    // MCS 的队列是显式的队列，有真实的后继结点属性
     public static class CLHLock {
         public static class CLHNode {
             private volatile boolean isLocked = true;
