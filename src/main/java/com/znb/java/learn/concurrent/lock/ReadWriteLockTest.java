@@ -1,4 +1,4 @@
-package com.znb.java.learn.concurrent;
+package com.znb.java.learn.concurrent.lock;
 
 import java.util.Random;
 import java.util.concurrent.locks.ReadWriteLock;

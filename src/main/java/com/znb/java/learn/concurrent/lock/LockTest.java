@@ -1,6 +1,5 @@
-package com.znb.java.learn.concurrent;
+package com.znb.java.learn.concurrent.lock;
 
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.concurrent.locks.ReentrantLock;
 
