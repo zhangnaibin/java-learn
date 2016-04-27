@@ -6,6 +6,8 @@ package com.znb.java.learn.datastruct;
  */
 public class SortAlgorithm {
 
+    // *****************  插入排序  *************
+
     // 一个有序表和一个无序表。每次从无序表中取出第一个元素，将它插入到有序表中的适当位置，使之成为新的有序表
     public void insertSort(int[] a) {
         for (int i = 1; i < a.length; i ++) {
@@ -33,6 +35,9 @@ public class SortAlgorithm {
         }
     }
 
+    // *****************  插入排序  *************
+
+    // *****************  冒泡排序  *************
     // 有标记位的冒泡排序,标记最后一次
     public void bubbleSort(int[] a, int n) {
         int flag, times = 0;
@@ -58,7 +63,9 @@ public class SortAlgorithm {
         }
         System.out.println("op times :" + times);
     }
+    // *****************  冒泡排序  *************
 
+    // *****************  快速排序  *************
     // 快排,low为左边界，high为右边界
     public void quickSortCell(int[] a, int low, int high) {
         if (low < high) {
@@ -91,8 +98,10 @@ public class SortAlgorithm {
             System.out.println(a[i]);
         }
     }
+    // *****************  快速排序  *************
 
-    // 选择排序
+
+    // *****************  选择排序  *************
     public void selectSort(int[] a) {
         int mixIdx;
         for (int i = 0; i < a.length; i ++) {
@@ -115,8 +124,10 @@ public class SortAlgorithm {
             System.out.println(a[i]);
         }
     }
+    // *****************  选择排序  *************
 
-    // 希尔排序
+
+    // *****************  希尔排序  *************
     public void shellSort(int[] a) {
         // 步长每次减半
         for (int gap = a.length / 2; gap > 0; gap /= 2) {
@@ -131,7 +142,7 @@ public class SortAlgorithm {
     }
 
     // 对shell排序中的单个组排序,就是一次插入排序的执行
-    public void groupSort(int a[], int leng, int start, int gap) {
+    private void groupSort(int a[], int leng, int start, int gap) {
         for (int j = start + gap; j < leng; j += gap) {
             // a[j]前面为有序的数组
             if (a[j] < a[j - gap]) {
@@ -145,6 +156,103 @@ public class SortAlgorithm {
             }
         }
     }
+    // *****************  希尔排序  *************
+
+
+    // *****************  归并排序  *************
+
+    private void mergeCombine(int[] a, int start, int mid, int end) {
+        int[] temp = new int[end - start + 1];
+        int i = start;
+        int j = mid + 1;
+        int k = 0;
+        while (i <= mid && j <= end) {
+            if (a[i] <= a[j]) {
+                temp[k ++] = a[i ++];
+            } else {
+                temp[k ++] = a[j ++];
+            }
+        }
+        while (i <= mid) {
+            temp[k ++] = a[i ++];
+        }
+        while (j <= end) {
+            temp[k ++] = a[j ++];
+        }
+        for (i = 0; i < k; i ++) {
+            a[start + i] = temp[i];
+        }
+        temp = null;
+    }
+
+    // start为开始地址，end为结束地址
+    public void mergeSort(int[] a, int start, int end) {
+        if (a == null || start == end) {
+            return ;
+        }
+        int mid = (start + end) / 2;
+        mergeSort(a, start, mid); // 递归排序a[start...mid]
+        mergeSort(a, mid + 1, end); // 递归排序a[mid+1...end]
+        // a[start...mid]和a[mid+1...end]是两个有序空间，合并
+        mergeCombine(a, start, mid, end);
+
+    }
+    // *****************  桶排序  *************
+
+
+    // *****************  桶排序  *************
+
+    // 桶排序,max 为数组最大值+1
+    public void bucketSort(int[] a, int max) {
+        int[] bucket;
+        if (null == a || max < 1) {
+            return ;
+        }
+        bucket = new int[max];
+        // 计数
+        for (int i = 0; i < a.length; i ++) {
+            bucket[a[i]] ++;
+        }
+        // 排序
+        for (int i= 0, j = 0; i < max; i ++) {
+            while ((bucket[i] --) > 0) {
+                a[j ++] = i;
+            }
+        }
+        bucket = null;
+
+        for (int i = 0; i < a.length; i ++) {
+            System.out.println(a[i]);
+        }
+    }
+    // *****************  桶排序  *************
+
+
+    // *****************  基数排序  *************
+    private int getMax(int[] a) {
+        int max = a[0];
+        for (int i = 1; i < a.length; i ++) {
+            if (a[i] > max) {
+                max = a[i];
+            }
+        }
+        return max;
+    }
+
+    // 对数组按照”某个位数“进行排序, exp = 1为个位，exp=10为十位
+    private void countSort(int[] a, int exp) {
+        int[] output = new int[a.length];
+        int[] buckets = new int[10];
+
+        for (int i = 0; i < a.length; i ++) {
+            buckets[(a[i]/exp) % 10]++;
+        }
+
+        for (int i = 1; i < 10; i ++) {
+            buckets[i] += buckets[i -1];
+        }
+    }
+    // *****************  基数排序  *************
 
     public static void main(String[] args) {
         int[] a = {3, 1, 99, 55, 77, 110, 5, 10086, 65};
@@ -153,5 +261,10 @@ public class SortAlgorithm {
 //        new SortAlgorithm().insertSort(a);
 //        new SortAlgorithm().selectSort(a);
 //        new SortAlgorithm().shellSort(a);
+//        new SortAlgorithm().mergeSort(a, 0 , a.length -1 );
+//        for (int t : a) {
+//            System.out.println(t);
+//        }
+//        new SortAlgorithm().bucketSort(a, 10086 + 1);
     }
 }
