@@ -254,6 +254,21 @@ public class SortAlgorithm {
     }
     // *****************  基数排序  *************
 
+    // *****************  堆排序  *************
+    // 数组顺序就是从上到下节点的顺序，这是一次的调整，从最后一个叶子节点开始
+    // start 为开始调整节点,从这个节点开始向前调整
+    private void heapAdjust(int[]a, int start, int end) {
+        int l = start * 2 + 1; // 左孩子节点
+        int current = start;
+        while (current >= 0) {
+            if (l < end && a[l] < a[l + 1]) {
+                l ++; // 选取孩子中较大值
+            }
+//            if ()
+        }
+    }
+    // *****************  堆排序  *************
+
     public static void main(String[] args) {
         int[] a = {3, 1, 99, 55, 77, 110, 5, 10086, 65};
 //        new SortAlgorithm().bubbleSort(a, a.length);
