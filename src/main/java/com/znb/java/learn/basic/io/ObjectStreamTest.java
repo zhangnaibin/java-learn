@@ -13,6 +13,14 @@ public class ObjectStreamTest {
             ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(""));
             out.writeObject(new Object());
             out.defaultWriteObject();
+
+            // 写数据
+            ObjectOutputStream.PutField putField = out.putFields();
+            putField.put("key", "value");
+            out.writeFields();
+
+            // 写数据
+            out.writeObject(new Object());
         } catch (Exception e) {
 
         }

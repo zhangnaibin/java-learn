@@ -255,16 +255,48 @@ public class SortAlgorithm {
     // *****************  基数排序  *************
 
     // *****************  堆排序  *************
-    // 数组顺序就是从上到下节点的顺序，这是一次的调整，从最后一个叶子节点开始
-    // start 为开始调整节点,从这个节点开始向前调整
-    private void heapAdjust(int[]a, int start, int end) {
-        int l = start * 2 + 1; // 左孩子节点
-        int current = start;
-        while (current >= 0) {
-            if (l < end && a[l] < a[l + 1]) {
-                l ++; // 选取孩子中较大值
+
+    // 调整位置index的堆，调整就是保证节点index为根的部分符合堆要求
+    // 从index开始向下调整
+    private void adjustHeap(int[] a, int index, int length) {
+
+        int flag = 0; // 标记是否需要继续调整
+        int max = index;
+        while (index * 2 + 1 < length && flag == 0) {
+            int left = index * 2 + 1;
+            int right = index * 2 + 2;
+            if (a[index] < a[left]) {
+                max = left;
             }
-//            if ()
+            if (right < length && a[max] < a[right]) {
+                max = right;
+            }
+            if (max != index) {
+                int temp = a[max];
+                a[max] = a[index];
+                a[index] = temp;
+                index = max;
+            } else {
+                flag = 1;
+            }
+        }
+    }
+
+    private void buildHeap(int[] a, int n) {
+        for (int i = n / 2; i >= 0; i --) {
+            adjustHeap(a, i, n);
+        }
+    }
+
+    public void heapSort(int[] a) {
+        for (int i = a.length; i > 0; i --) {
+            buildHeap(a, i);
+            int temp = a[i - 1];
+            a[i - 1] = a[0];
+            a[0] = temp;
+        }
+        for (int i = 0; i < a.length; i ++) {
+            System.out.println(a[i]);
         }
     }
     // *****************  堆排序  *************
@@ -281,5 +313,6 @@ public class SortAlgorithm {
 //            System.out.println(t);
 //        }
 //        new SortAlgorithm().bucketSort(a, 10086 + 1);
+        new SortAlgorithm().heapSort(a);
     }
 }
