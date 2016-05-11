@@ -38,8 +38,13 @@ public class SingletonModel {
         return InstanceHolder.instance;
     }
 
-    public static void main(String[] args) {
+    // 枚举单例
+    public enum EnumSingleton{
+        INSTANCE;
+    }
 
+    public static void main(String[] args) {
+        EnumSingleton e = EnumSingleton.INSTANCE;
     }
 
 }
