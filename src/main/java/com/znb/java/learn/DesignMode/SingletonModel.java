@@ -41,10 +41,14 @@ public class SingletonModel {
     // 枚举单例
     public enum EnumSingleton{
         INSTANCE;
+        public void show() {
+            System.out.println("enum singleton!");
+        }
     }
 
     public static void main(String[] args) {
         EnumSingleton e = EnumSingleton.INSTANCE;
+        e.show();
     }
 
 }
