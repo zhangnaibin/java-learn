@@ -8,4 +8,37 @@ package com.znb.java.learn.algorithm;
  * @time 2016-05-17 下午8:51
  */
 public class A26 {
+    private void print(int min, int max) {
+        for (int i = min; i <= max; i ++) {
+            System.out.print(i);
+        }
+        System.out.println();
+    }
+
+    public void findContinueSequence(int n) {
+        if (n < 3) {
+            return ;
+        }
+        int min = 1, max = 2;
+        int sum = min + max;
+        while (max <= (n + 1) / 2 ) {
+            if (sum > n) {
+                sum -= min;
+                min ++;
+            }
+            if (sum == n) {
+                print(min, max);
+                sum -= min;
+                min ++;
+            }
+            if (sum < n) {
+                max ++;
+                sum += max;
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        new A26().findContinueSequence(15);
+    }
 }
