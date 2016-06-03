@@ -1,0 +1,29 @@
+一个好的hashcode方法通常最好是不相等的对象产生不同的hash值。
+理想情况下，hashcode方法应该能把该集合中不相等的实例均匀分布
+到所有可能的hash值上面。
+
+一种计算方法：
+1、把某个非零的常数值，比如17，保存在一个名为result的int类型变量中。
+2、对于对象的每个域，做如下操作：
+
+    为该域计算int类型的哈希值c：
+
+        如果该域是boolean类型，则计算(f == null ? 1 : 0)
+
+        如果该域是byte、char、short或者int类型，则计算(int)f
+
+        如果该域是long类型，则计算(int)(f ^ (f >>> 32))
+
+        如果该域是float类型，则计算Float.floatToIntBits(f)
+
+        如果该域是double类型，则计算Double.doubleToLongBits(f),然后重复第三步
+
+        如果该域是一个对象引用，并且该类的equals方法通过递归调用equals方法来比较这个域，同样为这个域
+    递归调用hashcode，如果这个域为null，则返回0
+
+        如果该域是数组，则要把每一个元素当做单独的域来处理，递归地运用上述规则。如果数组域中的每个元素都
+    很重要，那么可以使用Arrays.hashCode()方法。
+
+    把上面计算得到的hash值c合并到result中
+        result = 31 * result + c (jvm会对*31进行优化，左移五位后减1)
+
