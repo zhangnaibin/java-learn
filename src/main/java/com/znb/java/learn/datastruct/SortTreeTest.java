@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.List;
 
 /**
+ * 排序树，实现快速求一个key的排名和获取topN
+ *
  * @author zhangnaibin@xiaomi.com
  * @time 2016-06-01 上午11:37
  */
