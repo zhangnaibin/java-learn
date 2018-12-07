@@ -29,7 +29,25 @@ public class P3 {
         return max;
     }
 
+    public int lengthOfLongestSubstring2(String s) {
+        char[] xx = s.toCharArray();
+        int max = 0;
+        for (int i = 0; i < xx.length; i ++) {
+            Set<Character> set = new HashSet<>();
+            for (int j = i; j < xx.length; j ++) {
+                if (set.contains(xx[j])) {
+                    break;
+                } else {
+                    set.add(xx[j]);
+                }
+            }
+            max = set.size() > max ? set.size() : max;
+        }
+        return max;
+
+    }
+
     public static void main(String[] args) {
-        System.out.println(new P3().lengthOfLongestSubstring("bbbb"));
+        System.out.println(new P3().lengthOfLongestSubstring2("abcabcbb"));
     }
 }

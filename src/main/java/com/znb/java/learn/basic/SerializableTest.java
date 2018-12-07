@@ -9,6 +9,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * 序列化测试

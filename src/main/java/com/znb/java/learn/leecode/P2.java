@@ -169,12 +169,89 @@ public class P2 {
         return result;
     }
 
+    public ListNode addTwoNumbers3(ListNode l1, ListNode l2) {
+        if (l1 == null && l2 == null) {
+            return null;
+        }
+        if (l1 == null) {
+            return l2;
+        }
+        if (l2 == null) {
+            return l1;
+        }
+
+        ListNode result = null;
+        ListNode pre = null;
+        boolean addExtra = false;
+        while (l1 != null && l2 != null) {
+            int count = l1.val + l2.val;
+            if (addExtra) {
+                count++;
+                addExtra = false;
+            }
+            if (count > 9) {
+                addExtra = true;
+                count = count % 10;
+            }
+            ListNode node = new ListNode(count);
+            if (result == null) {
+                result = node;
+                pre = node;
+            } else {
+                pre.next = node;
+                pre = pre.next;
+            }
+            l1 = l1.next;
+            l2 = l2.next;
+        }
+
+        while (l1 != null) {
+            int count = l1.val;
+            if (addExtra) {
+                count ++;
+                addExtra = false;
+            }
+            if (count > 9) {
+                addExtra = true;
+                count = count % 10;
+            }
+            ListNode node = new ListNode(count);
+            pre.next = node;
+            pre = pre.next;
+            l1 = l1.next;
+        }
+
+        while (l2 != null) {
+            int count = l2.val;
+            if (addExtra) {
+                count ++;
+                addExtra = false;
+            }
+            if (count > 9) {
+                addExtra = true;
+                count = count % 10;
+            }
+            ListNode node = new ListNode(count);
+            pre.next = node;
+            pre = pre.next;
+            l2 = l2.next;
+        }
+
+        if (addExtra) {
+            ListNode node = new ListNode(1);
+            node.next = null;
+            pre.next = node;
+        }
+
+        return result;
+    }
+
     public static void main(String[] args) {
         ListNode node1 = new ListNode(1);
         ListNode node2 = new ListNode(9);
         ListNode node3 = new ListNode(9);
         node2.next = node3;
-        ListNode result = new P2().addTwoNumbers(node1, node2);
+        ListNode result = new P2().addTwoNumbers3(node1, node2);
         while (result != null) {
             System.out.println(result.val);
             result = result.next;
