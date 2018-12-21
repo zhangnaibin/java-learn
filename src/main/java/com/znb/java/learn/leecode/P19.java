@@ -51,13 +51,8 @@ public class P19 {
         ListNode head = x.removeNthFromEnd(node1, 5);
         x.print(head);
     }
+
 }
 
-class ListNode {
-    int val;
-    ListNode next;
 
-    ListNode(int x) {
-        val = x;
-    }
-}
+
